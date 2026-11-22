@@ -9,6 +9,7 @@ const mainMenu = document.getElementById("mainMenu");
 const newGameBtn = document.getElementById("newGameBtn");
 const continueBtn = document.getElementById("continueBtn");
 const leaderboardBtn = document.getElementById("leaderboardBtn");
+const settingsBtn = document.getElementById("settingsBtn");
 
 // CHARACTER SELECTION
 const characterSelection = document.getElementById("characterSelection");
@@ -34,6 +35,12 @@ const exitGameBtn = document.getElementById("exitGameBtn");
 // SETTINGS
 const settingsScreen = document.getElementById("settingsScreen");
 const settingsBackBtn = document.getElementById("settingsBackBtn");
+const howToPlayBtn = document.getElementById("howToPlayBtn");
+const howToPlayPanel = document.getElementById("howToPlayPanel");
+const closeHowToPlayBtn = document.getElementById("closeHowToPlayBtn");
+const musicToggle = document.getElementById("musicToggle");
+let settingsReturnScreen = "main";
+let musicEnabled = true;
 
 // SAVE SLOTS
 const saveSlotsScreen = document.getElementById("saveSlotsScreen");
@@ -444,15 +451,20 @@ menuMusic.volume = 0.4;
 battleMusic.volume = 0.4;
 
 
+
 // PLAY MENU MUSIC
 function playMenuMusic() {
 
     battleMusic.pause();
     battleMusic.currentTime = 0;
 
-    menuMusic.play().catch(function(error) {
-        console.log("Menu music waiting for user interaction.");
-    });
+    if (musicEnabled) {
+        menuMusic.play().catch(function(error) {
+            console.log("Menu music waiting for user interaction.");
+        });
+    } else {
+        menuMusic.pause();
+    }
 
 }
 
@@ -463,7 +475,13 @@ function playBattleMusic() {
     menuMusic.pause();
     menuMusic.currentTime = 0;
 
-    battleMusic.play();
+    if (musicEnabled) {
+        battleMusic.play().catch(function(error) {
+            console.log("Battle music waiting for user interaction.");
+        });
+    } else {
+        battleMusic.pause();
+    }
 
 }
 
@@ -1905,22 +1923,95 @@ resumeBtn.addEventListener("click", function() {
 });
 
 
+
+// OPEN SETTINGS FROM MAIN MENU
+settingsBtn.addEventListener("click", function() {
+
+    settingsReturnScreen = "main";
+
+    mainMenu.style.display = "none";
+    settingsScreen.style.display = "block";
+
+    settingsBackBtn.textContent = "Back to Menu";
+
+});
+
+
 // OPEN SETTINGS FROM BATTLE
 battleSettingsBtn.addEventListener("click", function() {
+
+    settingsReturnScreen = "battle";
 
     gameScreen.style.display = "none";
     settingsScreen.style.display = "block";
 
     battleMenuPanel.style.display = "none";
 
+    settingsBackBtn.textContent = "Back to Battle";
+
 });
 
 
-// BACK TO BATTLE FROM SETTINGS
+// BACK BUTTON FROM SETTINGS
 settingsBackBtn.addEventListener("click", function() {
 
     settingsScreen.style.display = "none";
-    gameScreen.style.display = "block";
+
+    howToPlayPanel.style.display = "none";
+
+    if (settingsReturnScreen === "battle") {
+
+        gameScreen.style.display = "block";
+
+    } else {
+
+        mainMenu.style.display = "block";
+
+    }
+
+});
+
+
+// OPEN HOW TO PLAY
+howToPlayBtn.addEventListener("click", function() {
+
+    howToPlayPanel.style.display = "block";
+
+});
+
+
+// CLOSE HOW TO PLAY
+closeHowToPlayBtn.addEventListener("click", function() {
+
+    howToPlayPanel.style.display = "none";
+
+});
+
+
+// AUDIO ON/OFF
+musicToggle.addEventListener("change", function() {
+
+    musicEnabled = musicToggle.checked;
+
+    if (musicEnabled) {
+
+        if (gameScreen.style.display === "block" &&
+            gameScreen.classList.contains("battle-started")) {
+
+            playBattleMusic();
+
+        } else {
+
+            playMenuMusic();
+
+        }
+
+    } else {
+
+        menuMusic.pause();
+        battleMusic.pause();
+
+    }
 
 });
 

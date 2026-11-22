@@ -331,25 +331,51 @@
 
 
         <!-- Settings Screen -->
-        <section class="settings-screen" id="settingsScreen">
+        
+<!-- SETTINGS SCREEN -->
+<section class="settings-screen" id="settingsScreen">
 
-            <h2>Settings</h2>
+    <h2>Settings</h2>
 
-            <div class="settings-options">
-                <label>
-                    <input type="checkbox" id="musicToggle" checked>
-                    Background Music
-                </label>
+    
+<!-- HOW TO PLAY CONTAINER -->
+<div class="how-to-play-container">
 
-                <label>
-                    <input type="checkbox" id="soundToggle" checked>
-                    Sound Effects
-                </label>
-            </div>
+    <button id="howToPlayBtn">How to Play</button>
 
-            <button id="settingsBackBtn">Back to Menu</button>
+    <div id="howToPlayPanel" style="display: none;">
+        <h3>How to Play Bangkal Impact</h3>
 
-        </section>
+        <p>1. Choose your character and enter your player name.</p>
+        <p>2. Press Start Battle to begin fighting.</p>
+        <p>3. Select a skill to attack your enemy.</p>
+        <p>4. Defeat enemies to earn rewards.</p>
+        <p>5. Absorb monsters to gain EXP or capture them to expand your team.</p>
+        <p>6. Survive each stage and defeat the final boss!</p>
+
+        <button id="closeHowToPlayBtn">Close</button>
+    </div>
+
+</div>
+
+
+    <!-- AUDIO SETTINGS -->
+    <div class="settings-options">
+
+        <label>
+            <input type="checkbox" id="musicToggle" checked>
+            Audio
+        </label>
+
+    </div>
+
+    <!-- BACK BUTTON -->
+    <button id="settingsBackBtn">
+        Back to Menu
+    </button>
+
+</section>
+
 
         <!-- Leaderboards Screen -->
         <section class="leaderboard-screen" id="leaderboardScreen">

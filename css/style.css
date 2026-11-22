@@ -315,49 +315,190 @@ body.character-selection-active .game-logo {
 }
 
 
+
 /* ==================================================
    4. SETTINGS SCREEN
 ================================================== */
 
+
+/* CENTER SETTINGS CONTENT */
+
 .settings-screen {
+    position: relative;
+    top: 250px;
+    transform: none;
     padding: 20px;
 }
 
+
 .settings-screen h2 {
     color: #E8D7A8;
+    font-size: 28px;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px #101C19;
+}
+
+
+/* HOW TO PLAY BUTTON */
+
+.how-to-play-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 20px;
+}
+
+#howToPlayBtn {
+    width: 100%;
+    padding: 13px;
+}
+
+/* HOW TO PLAY MODAL */
+
+body:has(#howToPlayPanel[style*="display: block"])
+.how-to-play-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    width: min(540px, 90vw);
+    max-height: 85vh;
+    overflow-y: auto;
+
+    padding: 25px;
+    box-sizing: border-box;
+
+    background: rgba(20, 30, 26, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.55),
+        0 0 25px rgba(255, 255, 255, 0.25),
+        0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+#howToPlayPanel {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    color: #F1F0DF;
+    text-align: left;
+}
+
+#howToPlayPanel h3 {
+    color: #E8D7A8;
+    font-size: 21px;
+    text-align: center;
     margin-bottom: 25px;
 }
 
+#howToPlayPanel p {
+    color: #F1F0DF;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 13px;
+}
+
+#closeHowToPlayBtn {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    margin: 25px auto 0;
+    padding: 12px;
+}
+
+
+/* SETTINGS LOGO POSITION */
+
+body:has(#settingsScreen[style*="display: block"])
+.game-header {
+    position: fixed;
+    top: 15px;
+    right: 25px;
+    left: auto;
+    z-index: 50;
+}
+
+body:has(#settingsScreen[style*="display: block"])
+.game-logo {
+    width: 170px;
+}
+
+/* MOVE SETTINGS CONTENT UP */
+
+.settings-screen {
+    transform: translateY(-25px);
+}
+
+
+/* INSTRUCTIONS TITLE */
+
+#howToPlayPanel h3 {
+    color: #E8D7A8;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* INSTRUCTIONS TEXT */
+
+#howToPlayPanel p {
+    color: #C4D1C5;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* AUDIO SETTINGS */
+
 .settings-options {
-    background: #263B32;
-    padding: 25px;
-    border-radius: 10px;
-    margin-bottom: 25px;
+    max-width: 400px;
+    margin: 0 auto 25px;
+    padding: 22px;
+
+    background: rgba(38, 59, 50, 0.95);
+    border: 1px solid #627D60;
+    border-radius: 12px;
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
-
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    gap: 15px;
 }
 
 .settings-options label {
     display: flex;
     align-items: center;
     gap: 12px;
+
     color: #C4D1C5;
+    font-size: 16px;
     cursor: pointer;
 }
 
 .settings-options input {
     accent-color: #D7B979;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
 }
+
+/* BACK BUTTON */
+
+#settingsBackBtn {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 13px;
+}
+
 
 
 /* ==================================================
