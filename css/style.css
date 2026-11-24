@@ -154,6 +154,83 @@ button:hover {
 }
 
 
+
+/* ==================================================
+   MAIN MENU - RPG BUTTON DESIGN
+================================================== */
+
+.menu-buttons button {
+    width: 285px;
+    padding: 13px 18px;
+
+    background: linear-gradient(
+        180deg,
+        #21804D 0%,
+        #14673B 55%,
+        #104F30 100%
+    );
+
+    border: 2px solid #D7B979;
+    border-radius: 5px;
+
+    color: #F1F0DF;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    box-shadow:
+        0 4px 0 #755B32,
+        0 6px 10px rgba(0, 0, 0, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        filter 0.2s ease;
+}
+
+/* HOVER EFFECT */
+
+.menu-buttons button:hover {
+    background: linear-gradient(
+        180deg,
+        #D7B979 0%,
+        #B99550 100%
+    );
+
+    color: #18251F;
+
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow:
+        0 6px 0 #755B32,
+        0 9px 18px rgba(0, 0, 0, 0.4),
+        0 0 15px rgba(232, 215, 168, 0.4);
+
+    filter: brightness(1.08);
+}
+
+/* CLICK EFFECT */
+
+.menu-buttons button:active {
+    transform: translateY(2px) scale(0.98);
+
+    box-shadow:
+        0 1px 0 #755B32,
+        inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* KEYBOARD FOCUS */
+
+.menu-buttons button:focus-visible {
+    outline: 2px solid #F1F0DF;
+    outline-offset: 4px;
+}
+
+
 /* ==================================================
    3. CHARACTER SELECTION
 ================================================== */
@@ -497,6 +574,78 @@ body:has(#settingsScreen[style*="display: block"])
     max-width: 320px;
     margin: 0 auto;
     padding: 13px;
+}
+
+/*   AUDIO TOGGLE BUTTON */
+
+.audio-toggle-button {
+    position: fixed;
+    bottom: 18px;
+    left: 18px;
+
+    width: auto;
+    min-width: 125px;
+    max-width: none;
+
+    padding: 10px 16px;
+
+    background: linear-gradient(
+        180deg,
+        #263B32,
+        #14271F
+    );
+
+    color: #F1F0DF;
+    border: 2px solid #D7B979;
+    border-radius: 6px;
+
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+
+    z-index: 9999;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.audio-toggle-button:hover {
+    background: #D7B979;
+    color: #18251F;
+    transform: translateY(-2px);
+}
+
+.audio-toggle-button:active {
+    transform: scale(0.96);
+}
+
+/* AUDIO ON */
+.audio-toggle-button.audio-on {
+    background: linear-gradient(
+        180deg,
+        #21804D,
+        #104F30
+    );
+
+    box-shadow:
+        0 0 8px rgba(215, 185, 121, 0.4),
+        0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .audio-toggle-button {
+        bottom: 12px;
+        left: 12px;
+
+        width: auto;
+        min-width: 115px;
+
+        padding: 9px 12px;
+        font-size: 12px;
+    }
 }
 
 
@@ -1626,19 +1775,21 @@ body.save-slots-active .game-header {
     display: none;
     position: relative;
 
-    min-height: 100vh;
     width: 100%;
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
 
-    padding: 100px 20px 40px;
+    padding: 75px 20px 12px;
     box-sizing: border-box;
 
     text-align: center;
 
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 /* HIDE GAME HEADER */
@@ -1651,7 +1802,7 @@ body.leaderboard-active .game-header {
 
 .leaderboard-screen > button {
     position: absolute;
-    top: 25px;
+    top: 15px;
     left: 25px;
 
     padding: 10px 18px;
@@ -1663,34 +1814,37 @@ body.leaderboard-active .game-header {
 /* LEADERBOARD TITLE */
 
 .leaderboard-screen h2 {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 30px;
+    margin-bottom: 3px;
 }
 
 .leaderboard-screen > p {
     color: #ccc;
-    margin-bottom: 30px;
+    margin-bottom: 12px;
+    font-size: 13px;
 }
 
 /* LEADERBOARD LIST */
 
 .leaderboard-list {
-
     background: #30483B;
     border: 1px solid #627D60;
-    border-radius: 10px;
-    padding: 25px;
-    min-height: 120px;
-    line-height: 2;
+    border-radius: 12px;
+
+    padding: 10px;
 
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 6px;
 
     width: 100%;
-    max-width: 650px;
+    max-width: 700px;
+
+    height: calc(100svh - 155px);
+    box-sizing: border-box;
 
     margin: 0 auto;
+    overflow: hidden;
 }
 
 /* INDIVIDUAL LEADERBOARD CARD */
@@ -1698,16 +1852,19 @@ body.leaderboard-active .game-header {
 .leaderboard-entry {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+
+    flex: 1;
+    min-height: 0;
 
     width: 100%;
     box-sizing: border-box;
 
-    padding: 20px;
+    padding: 5px 12px;
 
     background: #1C2420;
     border: 1px solid #52645A;
-    border-radius: 18px;
+    border-radius: 12px;
 
     text-align: left;
 }
@@ -1715,9 +1872,10 @@ body.leaderboard-active .game-header {
 /* PLAYER RANK */
 
 .leaderboard-entry h3 {
-    font-size: 23px;
+    font-size: 19px;
     color: #E8C878;
     min-width: 35px;
+    text-align: center;
 }
 
 /* PLAYER INFORMATION */
@@ -1728,20 +1886,20 @@ body.leaderboard-active .game-header {
 }
 
 .leaderboard-player-info strong {
-    font-size: 17px;
+    font-size: 14px;
 }
 
 .leaderboard-player-info p {
-    margin-top: 5px;
-    font-size: 13px;
+    margin-top: 2px;
+    font-size: 11px;
     color: #ccc;
 }
 
 .leaderboard-player-info small {
     display: block;
-    margin-top: 5px;
+    margin-top: 2px;
     color: #89968E;
-    font-size: 11px;
+    font-size: 9px;
 }
 
 /* LEADERBOARD SCORE */
@@ -1750,15 +1908,248 @@ body.leaderboard-active .game-header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 48px;
     color: #E8C878;
 }
 
 .leaderboard-score strong {
-    font-size: 23px;
+    font-size: 20px;
 }
 
 .leaderboard-score small {
-    font-size: 10px;
+    font-size: 9px;
+}
+
+
+/* ==================================================
+   TOP 3 SPECIAL RANK DESIGNS
+================================================== */
+
+/* GOLD - TOP 1 */
+
+.leaderboard-entry:nth-child(1) {
+    background: linear-gradient(
+        110deg,
+        #59451D,
+        #A98535,
+        #59451D
+    );
+
+    border: 1px solid #FFE28A;
+
+    box-shadow:
+        0 0 8px rgba(255, 215, 90, 0.65),
+        0 0 18px rgba(255, 215, 90, 0.35),
+        inset 0 1px 5px rgba(255, 240, 170, 0.35);
+}
+
+.leaderboard-entry:nth-child(1) h3 {
+    background: linear-gradient(
+        145deg,
+        #FFF4B0,
+        #E8B83E,
+        #A87516
+    );
+
+    color: #49300A;
+    border: 2px solid #FFF0A3;
+    border-radius: 50%;
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 0 12px rgba(255, 220, 100, 0.8);
+}
+
+.leaderboard-entry:nth-child(1) .leaderboard-player-info strong,
+.leaderboard-entry:nth-child(1) .leaderboard-score {
+    color: #FFE69A;
+}
+
+
+/* SILVER - TOP 2 */
+
+.leaderboard-entry:nth-child(2) {
+    background: linear-gradient(
+        110deg,
+        #39434D,
+        #8796A5,
+        #39434D
+    );
+
+    border: 1px solid #E1EAF2;
+
+    box-shadow:
+        0 0 9px rgba(205, 220, 235, 0.5),
+        0 0 16px rgba(205, 220, 235, 0.2),
+        inset 0 1px 5px rgba(255, 255, 255, 0.3);
+}
+
+.leaderboard-entry:nth-child(2) h3 {
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #C9D3DC,
+        #8293A3
+    );
+
+    color: #26313A;
+    border: 2px solid #F1F5F8;
+    border-radius: 50%;
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 0 10px rgba(220, 235, 245, 0.7);
+}
+
+.leaderboard-entry:nth-child(2) .leaderboard-player-info strong,
+.leaderboard-entry:nth-child(2) .leaderboard-score {
+    color: #E8F0F7;
+}
+
+
+/* BRONZE - TOP 3 */
+
+.leaderboard-entry:nth-child(3) {
+    background: linear-gradient(
+        110deg,
+        #593A28,
+        #A96843,
+        #593A28
+    );
+
+    border: 1px solid #E6A477;
+
+    box-shadow:
+        0 0 8px rgba(205, 125, 75, 0.5),
+        0 0 16px rgba(205, 125, 75, 0.25),
+        inset 0 1px 5px rgba(255, 190, 140, 0.25);
+}
+
+.leaderboard-entry:nth-child(3) h3 {
+    background: linear-gradient(
+        145deg,
+        #FFD0A6,
+        #C47B4C,
+        #804326
+    );
+
+    color: #492615;
+    border: 2px solid #F3C19A;
+    border-radius: 50%;
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 0 10px rgba(220, 145, 95, 0.7);
+}
+
+.leaderboard-entry:nth-child(3) .leaderboard-player-info strong,
+.leaderboard-entry:nth-child(3) .leaderboard-score {
+    color: #F3C19A;
+}
+
+
+/* RANK 4 TO 10 - NORMAL DESIGN */
+
+.leaderboard-entry:nth-child(n+4) {
+    background: #1C2420;
+    border: 1px solid #52645A;
+    box-shadow: none;
+}
+
+.leaderboard-entry:nth-child(n+4) h3 {
+    background: none;
+    color: #E8C878;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.leaderboard-entry:nth-child(n+4) .leaderboard-player-info strong {
+    color: #F1F0DF;
+}
+
+.leaderboard-entry:nth-child(n+4) .leaderboard-score {
+    color: #E8C878;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .leaderboard-screen {
+        padding: 75px 10px 10px;
+    }
+
+    .leaderboard-screen h2 {
+        font-size: 24px;
+    }
+
+    .leaderboard-list {
+        height: calc(100svh - 145px);
+        padding: 7px;
+        gap: 5px;
+    }
+
+    .leaderboard-entry {
+        padding: 4px 7px;
+        gap: 7px;
+    }
+
+    .leaderboard-entry h3 {
+        font-size: 15px;
+        min-width: 28px;
+    }
+
+    .leaderboard-player-info strong {
+        font-size: 12px;
+    }
+
+    .leaderboard-player-info p {
+        font-size: 9px;
+    }
+
+    .leaderboard-player-info small {
+        font-size: 8px;
+    }
+
+    .leaderboard-score {
+        min-width: 38px;
+    }
+
+    .leaderboard-score strong {
+        font-size: 17px;
+    }
+}
+
+body.leaderboard-active::before {
+    background:
+        linear-gradient(
+            rgba(16, 28, 25, 0.65),
+            rgba(16, 28, 25, 0.65)
+        ),
+        url("../ASSETS/backgrounds/leaderboard-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    animation: cinematicMove 8s ease-in-out infinite alternate;
 }
 
 

@@ -40,7 +40,7 @@ const howToPlayPanel = document.getElementById("howToPlayPanel");
 const closeHowToPlayBtn = document.getElementById("closeHowToPlayBtn");
 const musicToggle = document.getElementById("musicToggle");
 let settingsReturnScreen = "main";
-let musicEnabled = true;
+let musicEnabled = false;
 
 // SAVE SLOTS
 const saveSlotsScreen = document.getElementById("saveSlotsScreen");
@@ -119,6 +119,7 @@ const restartBtn = document.getElementById("restartBtn");
 // AUDIO
 const menuMusic = document.getElementById("menuMusic");
 const battleMusic = document.getElementById("battleMusic");
+const audioToggleBtn = document.getElementById("audioToggleBtn");
 
 
 /* =====================================================
@@ -451,7 +452,6 @@ menuMusic.volume = 0.4;
 battleMusic.volume = 0.4;
 
 
-
 // PLAY MENU MUSIC
 function playMenuMusic() {
 
@@ -486,20 +486,36 @@ function playBattleMusic() {
 }
 
 
-// START MENU MUSIC WHEN PAGE LOADS
-document.addEventListener("DOMContentLoaded", function() {
-    playMenuMusic();
-});
+// AUDIO TOGGLE BUTTON
+audioToggleBtn.addEventListener("click", function() {
 
+    musicEnabled = !musicEnabled;
 
-// START MUSIC AFTER FIRST USER INTERACTION
-document.addEventListener("click", function() {
+    if (musicEnabled) {
 
-    if (menuMusic.paused && gameScreen.style.display === "none") {
-        playMenuMusic();
+        audioToggleBtn.textContent = "♫ Audio: ON";
+        audioToggleBtn.classList.add("audio-on");
+        audioToggleBtn.setAttribute("aria-pressed", "true");
+
+        // PLAY MUSIC BASED ON CURRENT SCREEN
+        if (gameScreen.classList.contains("battle-started")) {
+            playBattleMusic();
+        } else {
+            playMenuMusic();
+        }
+
+    } else {
+
+        audioToggleBtn.textContent = "♫ Audio: OFF";
+        audioToggleBtn.classList.remove("audio-on");
+        audioToggleBtn.setAttribute("aria-pressed", "false");
+
+        menuMusic.pause();
+        battleMusic.pause();
+
     }
 
-}, { once: true });
+}); 
 
 
 /* =====================================================
@@ -1986,35 +2002,6 @@ closeHowToPlayBtn.addEventListener("click", function() {
     howToPlayPanel.style.display = "none";
 
 });
-
-
-// AUDIO ON/OFF
-musicToggle.addEventListener("change", function() {
-
-    musicEnabled = musicToggle.checked;
-
-    if (musicEnabled) {
-
-        if (gameScreen.style.display === "block" &&
-            gameScreen.classList.contains("battle-started")) {
-
-            playBattleMusic();
-
-        } else {
-
-            playMenuMusic();
-
-        }
-
-    } else {
-
-        menuMusic.pause();
-        battleMusic.pause();
-
-    }
-
-});
-
 
 // EXIT GAME TO MAIN MENU
 exitGameBtn.addEventListener("click", function() {
