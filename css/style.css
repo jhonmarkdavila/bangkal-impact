@@ -34,7 +34,7 @@ body::before {
             rgba(16, 28, 25, 0.65),
             rgba(16, 28, 25, 0.65)
         ),
-        url("../ASSETS/backgrounds/menu-bg.jpg");
+        var(--main-menu-bg, url("../ASSETS/backgrounds/menu-bg.jpg"));
 
     background-size: cover;
     background-position: center;
@@ -403,7 +403,7 @@ body.character-selection-active .game-logo {
 .settings-screen {
     position: relative;
     top: 250px;
-    transform: none;
+    transform: translateY(-25px);
     padding: 20px;
 }
 
@@ -415,19 +415,6 @@ body.character-selection-active .game-logo {
     text-shadow: 2px 2px 4px #101C19;
 }
 
-
-/* HOW TO PLAY BUTTON */
-
-.how-to-play-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto 20px;
-}
-
-#howToPlayBtn {
-    width: 100%;
-    padding: 13px;
-}
 
 /* HOW TO PLAY MODAL */
 
@@ -506,12 +493,6 @@ body:has(#settingsScreen[style*="display: block"])
 body:has(#settingsScreen[style*="display: block"])
 .game-logo {
     width: 170px;
-}
-
-/* MOVE SETTINGS CONTENT UP */
-
-.settings-screen {
-    transform: translateY(-25px);
 }
 
 
@@ -649,7 +630,444 @@ body:has(#settingsScreen[style*="display: block"])
 }
 
 
+/* CREDITS SCREEN BACKGROUND */
 
+.credits-screen {
+    display: none;
+    position: fixed !important;
+
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100svh !important;
+
+    z-index: 9998;
+
+    padding: 80px 20px 30px;
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            rgba(10, 19, 17, 0.55),
+            rgba(10, 19, 17, 0.78)
+        ),
+        url("../ASSETS/backgrounds/credits-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow-y: auto;
+
+    align-items: flex-start;
+    justify-content: center;
+}
+
+
+#closeCreditsBtn {
+    position: fixed !important;
+
+    top: 18px !important;
+    left: 18px !important;
+
+    z-index: 9999;
+
+    width: auto;
+    padding: 10px 18px;
+}
+
+
+/* MAIN CREDITS PANEL */
+
+.credits-content {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+flex-shrink: 0;
+    padding: 35px 30px;
+
+    background: rgba(12, 24, 19, 0.86);
+
+    border: 2px solid #C7A96B;
+    outline: 1px solid rgba(231, 211, 157, 0.35);
+    outline-offset: 6px;
+
+    box-shadow:
+        0 0 15px rgba(218, 185, 111, 0.25),
+        0 0 45px rgba(0, 0, 0, 0.7);
+
+    text-align: center;
+}
+
+
+/* TITLE */
+
+.credits-subtitle {
+    color: #C7A96B;
+    font-size: 11px;
+    letter-spacing: 5px;
+    margin-bottom: 12px;
+}
+
+.credits-content > h2 {
+    color: #F3D99A;
+    font-size: clamp(22px, 4vw, 34px);
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 8px rgba(231, 211, 157, 0.45),
+        2px 2px 4px #000;
+}
+
+.credits-intro {
+    max-width: 520px;
+    margin: 15px auto 25px;
+
+    color: #D5DCCF;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* DIVIDER */
+
+.credits-divider {
+    width: 65%;
+    height: 1px;
+
+    margin: 25px auto;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #C7A96B,
+        transparent
+    );
+}
+
+
+/* TEAM MEMBERS */
+
+.credit-member {
+    margin: 28px auto;
+    max-width: 560px;
+}
+
+.credit-member h3 {
+    color: #F3D99A;
+    font-size: 23px;
+    letter-spacing: 4px;
+
+    text-shadow: 0 0 10px rgba(231, 211, 157, 0.3);
+}
+
+.credit-role {
+    color: #B9D5B8;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 8px 0 12px;
+}
+
+.credit-member p:last-child {
+    color: #D5DCCF;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* PLAYER MESSAGE */
+
+.player-thanks {
+    max-width: 560px;
+    margin: 35px auto 20px;
+}
+
+.player-thanks h3 {
+    color: #F3D99A;
+    font-size: 22px;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.player-thanks p {
+    color: #E0E5D9;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.player-thanks h4 {
+    color: #F3D99A;
+    font-size: 17px;
+    letter-spacing: 1px;
+    margin-top: 25px;
+
+    text-shadow: 0 0 10px rgba(231, 211, 157, 0.45);
+}
+
+
+/* FOOTER */
+
+.credits-footer {
+    color: #A6B09F;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-top: 35px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .credits-screen {
+        padding: 75px 15px 25px;
+        align-items: flex-start;
+    }
+
+    .credits-content {
+        padding: 28px 18px;
+    }
+
+    .credit-member h3 {
+        font-size: 20px;
+    }
+
+    .credit-member p:last-child,
+    .player-thanks p {
+        font-size: 13px;
+    }
+
+}
+
+/* BACKGROUND SELECTION */
+
+.background-settings h3 {
+    color: #E8D7A8;
+    margin-bottom: 8px;
+}
+
+.background-settings > p {
+    color: #C4D1C5;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.background-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.background-card {
+    width: 100%;
+    padding: 8px;
+
+    background: #263B32;
+    border: 2px solid #52645A;
+    border-radius: 8px;
+
+    color: #F1F0DF;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.background-card:hover:not(:disabled) {
+    transform: translateY(-4px);
+    border-color: #D7B979;
+}
+
+.background-card.selected {
+    border: 2px solid #E8D7A8;
+    box-shadow: 0 0 12px rgba(215,185,121,0.4);
+}
+
+.background-preview {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 10px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.menu-preview {
+    background-image: url("../ASSETS/backgrounds/menu-bg.jpg");
+}
+
+.tutuban-preview {
+    background-image: url("../ASSETS/backgrounds/tutuban-bg.jpg");
+}
+
+.moa-preview {
+    background-image: url("../ASSETS/backgrounds/MOA-bg.jpg");
+}
+
+.background-card span {
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.background-card small {
+    display: block;
+    color: #B9C6B8;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.empty-slot {
+    border-style: dashed;
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.empty-slot .background-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.25);
+    border-style: dashed;
+}
+
+.empty-slot .background-preview span {
+    font-size: 30px;
+    color: #C7A96B;
+}
+
+@media (max-width: 600px) {
+    .background-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* BACKGROUND SELECTION - CLEAN PANEL */
+
+.settings-screen:has(#backgroundSettingsPanel[style*="display: block"]) > h2,
+.settings-screen:has(#backgroundSettingsPanel[style*="display: block"]) > #settingsBackBtn,
+.settings-screen:has(#backgroundSettingsPanel[style*="display: block"]) .how-to-play-container,
+.settings-screen:has(#backgroundSettingsPanel[style*="display: block"]) .credits-button-container,
+.settings-screen:has(#backgroundSettingsPanel[style*="display: block"]) .background-button-container {
+    display: none;
+}
+
+/* BACKGROUND SETTINGS PANEL */
+
+.background-settings {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: min(900px, calc(100vw - 32px));
+    max-height: calc(100vh - 40px);
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    margin: 0;
+    padding: 65px 25px 25px;
+
+    background: rgba(20, 38, 30, 0.97);
+    border: 2px solid #D7B979;
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55);
+
+    z-index: 1000;
+}
+
+/* PANEL TITLE */
+.background-settings h3 {
+    margin: 5px 0 8px;
+    text-align: center;
+    font-size: 23px;
+}
+
+.background-settings > p {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+/* BACKGROUND CARDS */
+.background-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.background-preview {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+/* KEEP THE CARD DARK WHEN HOVERED */
+.background-card:hover:not(:disabled) {
+    background: #263B32;
+    color: #F1F0DF;
+    transform: translateY(-4px);
+    border-color: #D7B979;
+}
+
+/* SMALL SCREENS */
+@media (max-width: 650px) {
+    .background-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .background-settings {
+        padding: 16px;
+        max-height: 85vh;
+    }
+}
+
+/* FIX SETTINGS POSITION WHEN BACKGROUND PANEL IS OPEN */
+.settings-screen:has(#backgroundSettingsPanel[style*="display: block"]) {
+    transform: none !important;
+}
+
+/* SETTINGS BUTTONS - SAME SIZE */
+
+.how-to-play-container,
+.credits-button-container,
+.background-button-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 15px;
+}
+
+#howToPlayBtn,
+#creditsBtn,
+#backgroundSettingsBtn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+}
+
+/* BACK BUTTON INSIDE BACKGROUND PANEL */
+
+#closeBackgroundSettingsBtn {
+    position: absolute !important;
+    top: 18px !important;
+    left: 20px !important;
+    right: auto !important;
+    transform: none !important;
+
+    display: inline-block;
+    width: auto;
+    max-width: none;
+
+    margin: 0;
+    padding: 9px 16px;
+}
 /* ==================================================
    5. BATTLE SCREEN
 ================================================== */
@@ -2379,10 +2797,6 @@ body.leaderboard-active::before {
     }
 
     /* LEADERBOARD */
-
-    .leaderboard-screen {
-        padding: 90px 15px 30px;
-    }
 
     .leaderboard-screen h2 {
         font-size: 26px;

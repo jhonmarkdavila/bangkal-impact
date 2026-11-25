@@ -42,6 +42,17 @@ const musicToggle = document.getElementById("musicToggle");
 let settingsReturnScreen = "main";
 let musicEnabled = false;
 
+// BACKGROUND SETTINGS
+const backgroundSettingsBtn = document.getElementById("backgroundSettingsBtn");
+const backgroundSettingsPanel = document.getElementById("backgroundSettingsPanel");
+const closeBackgroundSettingsBtn = document.getElementById("closeBackgroundSettingsBtn");
+const backgroundCards = document.querySelectorAll(".background-card");
+
+// CREDITS
+const creditsBtn = document.getElementById("creditsBtn");
+const creditsScreen = document.getElementById("creditsScreen");
+const closeCreditsBtn = document.getElementById("closeCreditsBtn");
+
 // SAVE SLOTS
 const saveSlotsScreen = document.getElementById("saveSlotsScreen");
 const saveSlotList = document.getElementById("saveSlotList");
@@ -391,6 +402,91 @@ let leaderboardData = JSON.parse(
     localStorage.getItem(leaderboardStorageKey)
 ) || [];
 
+/* BACKGROUND SELECTION SYSTEM */
+
+// BACKGROUND IMAGES
+const backgroundImages = {
+    menu: "menu-bg.jpg",
+    tutuban: "tutuban-bg.jpg",
+    moa: "MOA-bg.jpg"
+};
+
+const backgroundStorageKey = "bangkalImpactMenuBackground";
+
+
+// APPLY SELECTED BACKGROUND
+function applyMenuBackground(backgroundName) {
+
+    const imageFile = backgroundImages[backgroundName];
+
+    if (!imageFile) return;
+
+    document.documentElement.style.setProperty(
+        "--main-menu-bg",
+        'url("../ASSETS/backgrounds/' + imageFile + '")'
+    );
+
+}
+
+
+// SELECT BACKGROUND
+backgroundCards.forEach(function(card) {
+
+    card.addEventListener("click", function() {
+
+        const selectedBackground = card.dataset.bg;
+
+        if (!backgroundImages[selectedBackground]) return;
+
+        localStorage.setItem(
+            backgroundStorageKey,
+            selectedBackground
+        );
+
+        applyMenuBackground(selectedBackground);
+
+        backgroundCards.forEach(function(item) {
+
+            item.classList.remove("selected");
+
+            item.querySelector("small").textContent = "Available";
+
+        });
+
+        card.classList.add("selected");
+
+        card.querySelector("small").textContent =
+            "Currently Selected";
+
+    });
+
+});
+
+
+// LOAD SAVED BACKGROUND
+const savedBackground =
+    localStorage.getItem(backgroundStorageKey) || "menu";
+
+applyMenuBackground(savedBackground);
+
+backgroundCards.forEach(function(card) {
+
+    if (card.dataset.bg === savedBackground) {
+
+        card.classList.add("selected");
+
+        card.querySelector("small").textContent =
+            "Currently Selected";
+
+    } else if (card.dataset.bg) {
+
+        card.classList.remove("selected");
+
+        card.querySelector("small").textContent = "Available";
+
+    }
+
+});
 
 /* =====================================================
    4. GENERAL GAME FUNCTIONS
@@ -1973,7 +2069,9 @@ settingsBackBtn.addEventListener("click", function() {
 
     settingsScreen.style.display = "none";
 
-    howToPlayPanel.style.display = "none";
+howToPlayPanel.style.display = "none";
+creditsScreen.style.display = "none";
+backgroundSettingsPanel.style.display = "none";
 
     if (settingsReturnScreen === "battle") {
 
@@ -1990,9 +2088,9 @@ settingsBackBtn.addEventListener("click", function() {
 
 // OPEN HOW TO PLAY
 howToPlayBtn.addEventListener("click", function() {
-
+    creditsScreen.style.display = "none";
+    backgroundSettingsPanel.style.display = "none";
     howToPlayPanel.style.display = "block";
-
 });
 
 
@@ -2000,6 +2098,21 @@ howToPlayBtn.addEventListener("click", function() {
 closeHowToPlayBtn.addEventListener("click", function() {
 
     howToPlayPanel.style.display = "none";
+
+});
+
+// OPEN CREDITS
+creditsBtn.addEventListener("click", function() {
+    howToPlayPanel.style.display = "none";
+    backgroundSettingsPanel.style.display = "none";
+    creditsScreen.style.display = "flex";
+});
+
+
+// CLOSE CREDITS
+closeCreditsBtn.addEventListener("click", function() {
+
+    creditsScreen.style.display = "none";
 
 });
 
@@ -2082,6 +2195,18 @@ leaderboardBackBtn.addEventListener("click", function() {
 
 });
 
+// OPEN BACKGROUND SETTINGS
+backgroundSettingsBtn.addEventListener("click", function() {
+    howToPlayPanel.style.display = "none";
+    creditsScreen.style.display = "none";
+
+    backgroundSettingsPanel.style.display = "block";
+});
+
+// CLOSE BACKGROUND SETTINGS
+closeBackgroundSettingsBtn.addEventListener("click", function() {
+    backgroundSettingsPanel.style.display = "none";
+});
 
 /* =====================================================
    19. MONSTER AND INVENTORY EVENT LISTENERS
