@@ -53,6 +53,11 @@ const creditsBtn = document.getElementById("creditsBtn");
 const creditsScreen = document.getElementById("creditsScreen");
 const closeCreditsBtn = document.getElementById("closeCreditsBtn");
 
+// MONSTER COLLECTION
+const monsterCollectionBtn = document.getElementById("monsterCollectionBtn");
+const monsterCollectionScreen = document.getElementById("monsterCollectionScreen");
+const closeMonsterCollectionBtn = document.getElementById("closeMonsterCollectionBtn");
+
 // SAVE SLOTS
 const saveSlotsScreen = document.getElementById("saveSlotsScreen");
 const saveSlotList = document.getElementById("saveSlotList");
@@ -148,6 +153,10 @@ const monsters = {
         attack: 15,
         defense: 10,
         description: "A cheerful tarsier monster with magical wings and star-powered abilities.",
+        ability: "Starlight Blessing - Uses the power of stars to strengthen its magical attacks.",
+        origin: "A mysterious forest near Manila, where magical lights appear at night.",
+        strengths: "Strong against Nature monsters. Weak against Electric monsters.",
+        weaknesses: "Vulnerable to powerful Electric attacks.",
         sprite: "ASSETS/monsters/tarsela/idle.png"
     },
 
@@ -159,6 +168,10 @@ const monsters = {
         attack: 13,
         defense: 12,
         description: "A small woodland rat monster that uses branches and nature-based attacks.",
+        ability: "Forest Bond - Draws energy from nature to strengthen its attacks.",
+        origin: "The green corners and hidden gardens of Divisoria.",
+        strengths: "Strong against Electric monsters. Weak against Light monsters.",
+        weaknesses: "Vulnerable to Light-based attacks.",
         sprite: "ASSETS/monsters/dagtwig/idle.png"
     },
 
@@ -170,6 +183,10 @@ const monsters = {
         attack: 10,
         defense: 10,
         description: "A playful dog monster wearing a bonnet. It uses howls, bones, and powerful bites in battle.",
+        ability: "Loyal Howl - Uses its powerful howl to intimidate opponents.",
+        origin: "A quiet neighborhood where it protects its friends.",
+        strengths: "Strong against Electric monsters. Weak against Light monsters.",
+        weaknesses: "Vulnerable to Light-based attacks.",
         sprite: "ASSETS/monsters/hushus/idle.png"
     },
 
@@ -181,6 +198,10 @@ const monsters = {
         attack: 14,
         defense: 11,
         description: "A powerful electric crocodile monster that uses lightning-based attacks to overwhelm its opponents.",
+        ability: "Thunder Charge - Stores electric energy to unleash powerful attacks.",
+        origin: "A stormy area where lightning frequently strikes.",
+        strengths: "Strong against Light monsters. Weak against Nature monsters.",
+        weaknesses: "Vulnerable to Nature-based attacks.",
         sprite: "ASSETS/monsters/thundile/idle.png"
     }
 
@@ -348,6 +369,160 @@ const playerSkillSets = {
     }
 
 };
+
+
+/* =====================================================
+   2.1 MONSTER COLLECTION SYSTEM
+===================================================== */
+
+// COLLECTION STORAGE
+const collectionStorageKey = "bangkalImpactDiscoveredMonsters";
+
+let discoveredMonsters = JSON.parse(
+    localStorage.getItem(collectionStorageKey)
+) || ["tarsela"];
+
+// TARSELA IS DISCOVERED FROM THE START
+if (!discoveredMonsters.includes("tarsela")) {
+    discoveredMonsters.push("tarsela");
+    localStorage.setItem(
+        collectionStorageKey,
+        JSON.stringify(discoveredMonsters)
+    );
+}
+
+
+// DISCOVER A MONSTER
+function discoverMonster(monsterName) {
+
+    const monsterId = Object.keys(monsters).find(function(id) {
+        return monsters[id].name === monsterName;
+    });
+
+    if (!monsterId) return;
+
+    if (!discoveredMonsters.includes(monsterId)) {
+
+        discoveredMonsters.push(monsterId);
+
+        localStorage.setItem(
+            collectionStorageKey,
+            JSON.stringify(discoveredMonsters)
+        );
+
+    }
+
+    renderMonsterCollection();
+}
+
+
+// DISPLAY MONSTER COLLECTION
+function renderMonsterCollection() {
+
+    const grid = document.getElementById("monsterCollectionGrid");
+    const progress = document.getElementById("collectionProgress");
+    const progressFill = document.getElementById("collectionProgressFill");
+
+    if (!grid || !progress || !progressFill) return;
+
+    const monsterIds = Object.keys(monsters);
+
+    const discoveredCount = discoveredMonsters.length;
+    const totalMonsters = monsterIds.length;
+
+    progress.textContent =
+        discoveredCount + " / " + totalMonsters + " Discovered";
+
+    progressFill.style.width =
+        (discoveredCount / totalMonsters * 100) + "%";
+
+    grid.innerHTML = "";
+
+    monsterIds.forEach(function(id) {
+
+        const monster = monsters[id];
+        const isDiscovered = discoveredMonsters.includes(id);
+
+        const card = document.createElement("button");
+
+        card.type = "button";
+
+        card.className = "collection-monster-card";
+
+        if (!isDiscovered) {
+            card.classList.add("locked");
+        }
+
+        card.innerHTML = `
+            <img src="${monster.sprite}" alt="Monster">
+            <h3>${isDiscovered ? monster.name : "???"}</h3>
+        `;
+
+        card.addEventListener("click", function() {
+            showCollectionMonster(id);
+        });
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+// DISPLAY MONSTER DETAILS
+function showCollectionMonster(monsterId) {
+
+    const monster = monsters[monsterId];
+
+    if (!monster) return;
+
+    const isDiscovered = discoveredMonsters.includes(monsterId);
+
+    const image = document.getElementById("collectionMonsterImage");
+
+    image.src = monster.sprite;
+
+    image.style.filter = isDiscovered
+        ? "none"
+        : "brightness(0)";
+
+    document.getElementById("collectionMonsterName").textContent =
+        isDiscovered ? monster.name : "Undiscovered Monster";
+
+    document.getElementById("collectionMonsterNature").textContent =
+        isDiscovered ? "Element: " + monster.element : "Element: ???";
+
+    document.getElementById("collectionMonsterAbility").textContent =
+        isDiscovered ? monster.ability : "???";
+
+    document.getElementById("collectionMonsterDescription").textContent =
+        isDiscovered ? monster.description : "Discover this monster to reveal its description.";
+
+    document.getElementById("collectionMonsterOrigin").textContent =
+        isDiscovered ? monster.origin : "???";
+
+    document.getElementById("collectionMonsterStrengths").textContent =
+        isDiscovered
+            ? monster.strengths + " " + monster.weaknesses
+            : "???";
+
+    const skillSet = playerSkillSets[monster.name];
+
+    const attacks = skillSet
+        ? Object.values(skillSet).map(function(skill) {
+            return skill.name;
+        }).join(", ")
+        : "Unknown";
+
+    document.getElementById("collectionMonsterAttacks").textContent =
+        isDiscovered ? attacks : "???";
+
+}
+
+
+// INITIALIZE COLLECTION
+renderMonsterCollection();
+
 
 
 /* =====================================================
@@ -1315,6 +1490,7 @@ function captureMonster() {
     };
 
     playerTeam.push(capturedMonster);
+    discoverMonster(capturedMonster.name);
 
 
     // KEEP TARSELA AS ACTIVE MONSTER
@@ -2072,6 +2248,7 @@ settingsBackBtn.addEventListener("click", function() {
 howToPlayPanel.style.display = "none";
 creditsScreen.style.display = "none";
 backgroundSettingsPanel.style.display = "none";
+monsterCollectionScreen.style.display = "none";
 
     if (settingsReturnScreen === "battle") {
 
@@ -2206,6 +2383,33 @@ backgroundSettingsBtn.addEventListener("click", function() {
 // CLOSE BACKGROUND SETTINGS
 closeBackgroundSettingsBtn.addEventListener("click", function() {
     backgroundSettingsPanel.style.display = "none";
+});
+
+// OPEN MONSTER COLLECTION
+monsterCollectionBtn.addEventListener("click", function() {
+
+    // HIDE OTHER SETTINGS PANELS
+    howToPlayPanel.style.display = "none";
+    creditsScreen.style.display = "none";
+    backgroundSettingsPanel.style.display = "none";
+
+    // HIDE SETTINGS SCREEN
+    settingsScreen.style.display = "none";
+
+    // OPEN COLLECTION
+    monsterCollectionScreen.style.display = "block";
+
+});
+
+
+// CLOSE MONSTER COLLECTION
+closeMonsterCollectionBtn.addEventListener("click", function() {
+
+    monsterCollectionScreen.style.display = "none";
+
+    // RETURN TO SETTINGS
+    settingsScreen.style.display = "block";
+
 });
 
 /* =====================================================

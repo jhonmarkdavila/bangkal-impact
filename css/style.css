@@ -1038,20 +1038,21 @@ flex-shrink: 0;
 
 .how-to-play-container,
 .credits-button-container,
-.background-button-container {
+.background-button-container,
+.collection-button-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 445px;
     margin: 0 auto 15px;
 }
 
 #howToPlayBtn,
 #creditsBtn,
-#backgroundSettingsBtn {
+#backgroundSettingsBtn,
+#monsterCollectionBtn {
     display: block;
     width: 100%;
     padding: 13px;
 }
-
 /* BACK BUTTON INSIDE BACKGROUND PANEL */
 
 #closeBackgroundSettingsBtn {
@@ -1068,6 +1069,12 @@ flex-shrink: 0;
     margin: 0;
     padding: 9px 16px;
 }
+
+/* MONSTER COLLECTION SCREEN */
+.monster-collection-screen {
+    display: none;
+}
+
 /* ==================================================
    5. BATTLE SCREEN
 ================================================== */
@@ -2861,3 +2868,302 @@ body.leaderboard-active::before {
         padding: 5px 0 2px;
     }
 }
+
+
+/* ==================================================
+   16. MONSTER COLLECTION - ENCYCLOPEDIA DESIGN
+================================================== */
+
+.monster-collection-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+
+    padding: 25px 35px;
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            rgba(10, 22, 17, 0.94),
+            rgba(16, 35, 26, 0.97)
+        );
+
+    color: #F1F0DF;
+}
+
+/* BACK BUTTON */
+
+#closeMonsterCollectionBtn {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+
+    width: auto;
+    padding: 10px 17px;
+
+    z-index: 5;
+}
+
+/* COLLECTION HEADER */
+
+.collection-header {
+    text-align: center;
+    margin: 20px auto 25px;
+}
+
+.collection-header h2 {
+    color: #E8D7A8;
+    font-size: 30px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+
+.collection-header > p {
+    color: #B5C4B7;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* COLLECTION PROGRESS */
+
+.collection-progress {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#collectionProgress {
+    display: block;
+    color: #E8D7A8;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.collection-progress-bar {
+    width: 100%;
+    height: 10px;
+
+    background: #17251D;
+    border: 1px solid #627D60;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#collectionProgressFill {
+    width: 0%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #14673B,
+        #D7B979
+    );
+
+    transition: width 0.4s ease;
+}
+
+/* MAIN COLLECTION LAYOUT */
+
+.collection-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.85fr);
+    gap: 25px;
+
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+/* MONSTER GRID */
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+
+    padding: 18px;
+
+    background: rgba(38, 59, 50, 0.75);
+    border: 2px solid #627D60;
+    border-radius: 12px;
+}
+
+/* MONSTER CARDS - FOR JAVASCRIPT */
+
+.collection-monster-card {
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+
+    background: rgba(16, 28, 25, 0.95);
+    border: 1px solid #627D60;
+    border-radius: 8px;
+
+    color: #F1F0DF;
+    text-align: center;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.collection-monster-card:hover {
+    border-color: #D7B979;
+    transform: translateY(-3px);
+}
+
+.collection-monster-card.selected {
+    border: 2px solid #D7B979;
+    background: #30483B;
+}
+
+/* MONSTER IMAGE */
+
+.collection-monster-card img {
+    display: block;
+    width: 100%;
+    height: 100px;
+
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* UNDISCOVERED MONSTER */
+
+.collection-monster-card.locked img {
+    filter: brightness(0);
+    opacity: 0.8;
+}
+
+.collection-monster-card.locked {
+    border-style: dashed;
+    opacity: 0.75;
+}
+
+.collection-monster-card h3 {
+    color: #E8D7A8;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+/* MONSTER DETAILS PANEL */
+
+.collection-details {
+    min-width: 0;
+    padding: 22px;
+
+    background: rgba(38, 59, 50, 0.95);
+    border: 2px solid #D7B979;
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+.collection-monster-image {
+    width: 100%;
+    height: 190px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 12px;
+
+    background: rgba(16, 28, 25, 0.7);
+    border: 1px solid #627D60;
+    border-radius: 10px;
+}
+
+.collection-monster-image img {
+    width: 170px;
+    height: 170px;
+
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+#collectionMonsterName {
+    color: #E8D7A8;
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+#collectionMonsterNature {
+    color: #A8C9A8;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* MONSTER INFORMATION */
+
+.collection-info {
+    padding: 15px;
+
+    background: rgba(16, 28, 25, 0.7);
+    border-radius: 8px;
+
+    text-align: left;
+}
+
+.collection-info h4 {
+    color: #D7B979;
+    font-size: 14px;
+    margin: 15px 0 5px;
+}
+
+.collection-info h4:first-child {
+    margin-top: 0;
+}
+
+.collection-info p {
+    color: #D5DCCF;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 800px) {
+    .monster-collection-screen {
+        padding: 75px 15px 25px;
+    }
+
+    .collection-content {
+        grid-template-columns: 1fr;
+    }
+
+    .collection-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .collection-details {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .collection-header h2 {
+        font-size: 22px;
+    }
+
+    .collection-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .collection-monster-card img {
+        height: 80px;
+    }
+
+    .collection-details {
+        padding: 15px;
+    }
+}
+
